@@ -4,6 +4,7 @@ import 'package:silesia_guide/screens/events_screen.dart';
 import 'package:silesia_guide/screens/explore_screen.dart';
 import 'package:silesia_guide/screens/home_screen.dart';
 import 'package:silesia_guide/screens/news_screen.dart';
+import 'package:silesia_guide/ui/colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,8 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Silesia Guide',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: AppColors.backgroundHomePageColor,
         useMaterial3: true,
       ),
       home: const MyHomePage(),
@@ -53,8 +53,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white,
           elevation: 0,
+          toolbarHeight: 80,
         ),
         bottomNavigationBar: BottomNavbar(
           currentIndex: _currentIndex,
