@@ -141,6 +141,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   isFavoriteList[index] = !isFavoriteList[index];
                 });
               },
+              caption: captions[index],
             ),
             itemCount: imagePaths.length,
           ),

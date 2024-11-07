@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:silesia_guide/utils/colors.dart';
 import 'package:silesia_guide/utils/spacing.dart';
+import 'package:silesia_guide/utils/text_styles.dart';
 
 class ImageCardComponent extends StatelessWidget {
   final String imagePath;
   final bool isFavorite;
   final VoidCallback onFavoriteTap;
+  final String caption;
 
   const ImageCardComponent({
     super.key,
     required this.imagePath,
     required this.isFavorite,
     required this.onFavoriteTap,
+    required this.caption,
   });
 
   @override
@@ -53,6 +56,22 @@ class ImageCardComponent extends StatelessWidget {
                 ),
               ),
             ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: gap8, vertical: gap8),
+                decoration: BoxDecoration(
+                  color: AppColors.blackColor.withAlpha(100),
+                ),
+                child: Text(
+                  caption,
+                  style: captionTextStyle,
+                  softWrap: true,
+                ),
+              ),
+            )
           ],
         ),
       ),

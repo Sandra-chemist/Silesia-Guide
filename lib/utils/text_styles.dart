@@ -12,3 +12,9 @@ TextStyle regularTextStyle = const TextStyle(
   fontSize: 16.0,
   fontWeight: FontWeight.bold,
 );
+
+TextStyle captionTextStyle = const TextStyle(
+  color: AppColors.whiteColor,
+  fontSize: 18,
+  fontWeight: FontWeight.bold,
+);
