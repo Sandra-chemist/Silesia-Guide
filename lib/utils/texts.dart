@@ -10,6 +10,6 @@ List<String> captions = const [
   'Dłuższe godziny zwiedzania Muzeum',
   'Carbonerum dla licealistów',
   'Dłuższe godziny zwiedzania Muzeum',
-  'Carbonerum dla licealistów',
+  'Carbonerum nie tylko dla licealistów',
   'Dłuższe godziny zwiedzania Muzeum',
 ];

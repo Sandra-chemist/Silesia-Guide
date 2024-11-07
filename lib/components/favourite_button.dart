@@ -29,7 +29,7 @@ class FavoriteButton extends StatelessWidget {
         ),
         child: Icon(
           isFavorite ? Icons.favorite : Icons.favorite_border,
-          color: isFavorite ? AppColors.heartFillColor : AppColors.whiteColor,
+          color: isFavorite ? AppColors.greenColor : AppColors.whiteColor,
         ),
       ),
     );

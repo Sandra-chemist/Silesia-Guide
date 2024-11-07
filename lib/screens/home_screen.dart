@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:silesia_guide/components/image_card.dart';
 import 'package:silesia_guide/components/button_component.dart';
+import 'package:silesia_guide/components/scroll_to_top_button.dart';
+import 'package:silesia_guide/components/semi_circular_button.dart';
 import 'package:silesia_guide/utils/image_path.dart';
 import 'package:silesia_guide/utils/spacing.dart';
 import 'package:silesia_guide/utils/text_styles.dart';
@@ -17,7 +19,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   late AnimationController _controller;
   late Animation<double> _imagePositionAnimation;
   late Animation<double> _textPositionAnimation;
+  final ScrollController _scrollController = ScrollController();
+
   List<bool> isFavoriteList = List.generate(8, (index) => false);
+  double scrollOffset = 0.0;
 
   @override
   void initState() {
@@ -38,12 +43,27 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     Future.delayed(const Duration(seconds: 11), () {
       _controller.forward();
     });
+
+    _scrollController.addListener(() {
+      setState(() {
+        scrollOffset = _scrollController.offset;
+      });
+    });
   }
 
   @override
   void dispose() {
+    _scrollController.dispose();
     _controller.dispose();
     super.dispose();
+  }
+
+  void _scrollToTop() {
+    _scrollController.animateTo(
+      0.0,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -53,14 +73,19 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         padding: const EdgeInsets.symmetric(horizontal: gap16),
         child: Stack(
           children: [
+            _semiCircularButtonBuild(),
             _headerBuild(),
             _buttonsBuild(),
             _galleryBuild(),
+            if (scrollOffset > 100) _scrollButtonBuild()
           ],
         ),
       ),
     );
   }
+
+  Widget _semiCircularButtonBuild() => Positioned(right: 0, top: -58, child: SemiCircularButton(onPressed: () {}));
+  Widget _scrollButtonBuild() => Positioned(bottom: 20, right: 0, child: ScrollToTopButton(onPressed: _scrollToTop));
 
   Widget _headerBuild() {
     return AnimatedBuilder(
@@ -70,9 +95,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           top: MediaQuery.of(context).size.height * _textPositionAnimation.value + 20.0,
           left: 0,
           right: 0,
-          child: Text(
-            recommendedText,
-            style: headerTextStyle,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                recommendedText,
+                style: headerTextStyle,
+              ),
+            ],
           ),
         );
       },
@@ -126,6 +156,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           right: 0,
           bottom: 0,
           child: GridView.builder(
+            controller: _scrollController,
             padding: EdgeInsets.zero,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
