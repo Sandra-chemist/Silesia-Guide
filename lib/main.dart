@@ -4,7 +4,7 @@ import 'package:silesia_guide/screens/events_screen.dart';
 import 'package:silesia_guide/screens/explore_screen.dart';
 import 'package:silesia_guide/screens/home_screen.dart';
 import 'package:silesia_guide/screens/news_screen.dart';
-import 'package:silesia_guide/ui/colors.dart';
+import 'package:silesia_guide/utils/colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,18 +52,17 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          toolbarHeight: 90,
-        ),
-        bottomNavigationBar: BottomNavbar(
-          currentIndex: _currentIndex,
-          onTap: _onTap,
-        ),
-        body: OrientationBuilder(
-          builder: (context, orientation) => orientation == Orientation.portrait ? buildPortrait() : buildLandscape(),
-        ));
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        toolbarHeight: MediaQuery.of(context).size.width < 600 ? 90 : 40,
+      ),
+      bottomNavigationBar: BottomNavbar(
+        currentIndex: _currentIndex,
+        onTap: _onTap,
+      ),
+      body: _screens[_currentIndex],
+    );
   }
 
   void _onTap(int index) {
@@ -71,7 +70,4 @@ class _MyHomePageState extends State<MyHomePage> {
       _currentIndex = index;
     });
   }
-
-  Widget buildPortrait() => _screens[_currentIndex];
-  Widget buildLandscape() => _screens[_currentIndex];
 }

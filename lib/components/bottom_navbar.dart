@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silesia_guide/ui/colors.dart';
+import 'package:silesia_guide/utils/colors.dart';
 
 typedef NavItems = List<({IconData icon, String label})>;
 
@@ -33,7 +33,7 @@ class BottomNavbar extends StatelessWidget {
       child: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: onTap,
-        selectedItemColor: AppColors.selectedItemColor,
+        selectedItemColor: AppColors.blackColor,
         unselectedItemColor: AppColors.unselectedItemColor,
         backgroundColor: AppColors.backgroundNavbarColor,
         elevation: 0,
