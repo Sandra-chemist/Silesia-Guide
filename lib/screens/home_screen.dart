@@ -166,21 +166,35 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               mainAxisExtent: height,
             ),
             itemBuilder: (context, index) {
-              return index == 0
-                  ? CustomTile(
-                      onTap: () {},
-                      text: trailsText,
-                    )
-                  : ImageCardComponent(
-                      imagePath: imagePaths[index],
-                      isFavorite: isFavoriteList[index],
-                      onFavoriteTap: () {
-                        setState(() {
-                          isFavoriteList[index] = !isFavoriteList[index];
-                        });
-                      },
-                      caption: captions[index],
-                    );
+              if (index == 0) {
+                return Transform.translate(
+                  offset: Offset(0, height / 2),
+                  child: CustomTile(onTap: () {}, text: trailsText),
+                );
+              }
+
+              int adjustedIndex = index - 1;
+              bool isInSecondColumn = adjustedIndex % 2 != 0;
+
+              Widget item = ImageCardComponent(
+                imagePath: imagePaths[adjustedIndex],
+                isFavorite: isFavoriteList[adjustedIndex],
+                onFavoriteTap: () {
+                  setState(() {
+                    isFavoriteList[adjustedIndex] = !isFavoriteList[adjustedIndex];
+                  });
+                },
+                caption: captions[adjustedIndex],
+              );
+
+              if (isInSecondColumn) {
+                return Transform.translate(
+                  offset: Offset(0, height / 2),
+                  child: item,
+                );
+              }
+
+              return item;
             },
             itemCount: imagePaths.length,
           ),
