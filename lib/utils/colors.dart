@@ -9,4 +9,5 @@ class AppColors {
   static const Color backgroundFirstButtonColor = Color.fromRGBO(0x9F, 0x84, 0xD9, 1);
   static const Color whiteColor = Color.fromRGBO(0xFF, 0xFF, 0xFF, 1);
   static const Color greenColor = Color.fromRGBO(0x22, 0xF2, 0xA6, 1);
+  static const Color blueColor = Color.fromRGBO(0x0F, 0x6C, 0xA6, 1);
 }

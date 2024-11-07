@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:silesia_guide/components/custom_tile.dart';
 import 'package:silesia_guide/components/image_card.dart';
 import 'package:silesia_guide/components/button_component.dart';
 import 'package:silesia_guide/components/scroll_to_top_button.dart';
@@ -164,16 +165,23 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               crossAxisSpacing: gap8,
               mainAxisExtent: height,
             ),
-            itemBuilder: (context, index) => ImageCardComponent(
-              imagePath: imagePaths[index],
-              isFavorite: isFavoriteList[index],
-              onFavoriteTap: () {
-                setState(() {
-                  isFavoriteList[index] = !isFavoriteList[index];
-                });
-              },
-              caption: captions[index],
-            ),
+            itemBuilder: (context, index) {
+              return index == 0
+                  ? CustomTile(
+                      onTap: () {},
+                      text: trailsText,
+                    )
+                  : ImageCardComponent(
+                      imagePath: imagePaths[index],
+                      isFavorite: isFavoriteList[index],
+                      onFavoriteTap: () {
+                        setState(() {
+                          isFavoriteList[index] = !isFavoriteList[index];
+                        });
+                      },
+                      caption: captions[index],
+                    );
+            },
             itemCount: imagePaths.length,
           ),
         );
