@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
-          toolbarHeight: 80,
+          toolbarHeight: 90,
         ),
         bottomNavigationBar: BottomNavbar(
           currentIndex: _currentIndex,
