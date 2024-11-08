@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silesia_guide/components/bottom_navbar.dart';
+import 'package:silesia_guide/components/custom_app_bar.dart';
 import 'package:silesia_guide/screens/events_screen.dart';
 import 'package:silesia_guide/screens/explore_screen.dart';
 import 'package:silesia_guide/screens/home_screen.dart';
@@ -52,11 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        toolbarHeight: MediaQuery.of(context).size.width < 600 ? 80 : 40,
-      ),
+      appBar: const CustomAppBar(),
       bottomNavigationBar: BottomNavbar(
         currentIndex: _currentIndex,
         onTap: _onTap,
