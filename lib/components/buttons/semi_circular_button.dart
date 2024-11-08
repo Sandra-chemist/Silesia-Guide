@@ -5,22 +5,32 @@ class SemiCircularButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color backgroundColor;
   final double diameter;
+  final Animation<double> animation;
 
   const SemiCircularButton({
     super.key,
     required this.onPressed,
+    required this.animation,
     this.backgroundColor = AppColors.greenColor,
     this.diameter = 56.0,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: CustomPaint(
-        size: Size(diameter, diameter),
-        painter: SemiCircularButtonPainter(backgroundColor),
-      ),
+    return AnimatedBuilder(
+      animation: animation,
+      builder: (context, child) {
+        return Positioned(
+            right: 0,
+            top: MediaQuery.of(context).size.height * animation.value - 60,
+            child: GestureDetector(
+              onTap: onPressed,
+              child: CustomPaint(
+                size: Size(diameter, diameter),
+                painter: SemiCircularButtonPainter(backgroundColor),
+              ),
+            ));
+      },
     );
   }
 }

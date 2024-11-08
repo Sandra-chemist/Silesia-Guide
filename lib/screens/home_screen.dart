@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:silesia_guide/components/buttons/button_section.dart';
 import 'package:silesia_guide/components/custom_tile.dart';
+import 'package:silesia_guide/components/header.dart';
 import 'package:silesia_guide/components/image_card.dart';
-import 'package:silesia_guide/components/button_component.dart';
-import 'package:silesia_guide/components/scroll_to_top_button.dart';
-import 'package:silesia_guide/components/semi_circular_button.dart';
+import 'package:silesia_guide/components/buttons/scroll_to_top_button.dart';
+import 'package:silesia_guide/components/buttons/semi_circular_button.dart';
 import 'package:silesia_guide/utils/colors.dart';
 import 'package:silesia_guide/utils/image_path.dart';
 import 'package:silesia_guide/utils/spacing.dart';
-import 'package:silesia_guide/utils/text_styles.dart';
 import 'package:silesia_guide/utils/texts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
 
-    Future.delayed(const Duration(seconds: 11), () {
+    Future.delayed(const Duration(seconds: 12), () {
       _controller.forward();
     });
 
@@ -75,84 +75,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         padding: const EdgeInsets.symmetric(horizontal: gap16),
         child: Stack(
           children: [
-            _semiCircularButtonBuild(),
-            _headerBuild(),
-            _buttonsBuild(),
+            SemiCircularButton(onPressed: () {}, animation: _textPositionAnimation),
+            Header(animation: _textPositionAnimation),
+            ButtonsSection(animation: _textPositionAnimation),
             _galleryBuild(),
-            if (scrollOffset > 100) _scrollButtonBuild()
+            if (scrollOffset > 100) ScrollToTopButton(onPressed: _scrollToTop)
           ],
         ),
       ),
-    );
-  }
-
-  Widget _semiCircularButtonBuild() {
-    return AnimatedBuilder(
-      animation: _textPositionAnimation,
-      builder: (context, child) {
-        return Positioned(
-          right: 0,
-          top: MediaQuery.of(context).size.height * _textPositionAnimation.value - 60,
-          child: SemiCircularButton(onPressed: () {}),
-        );
-      },
-    );
-  }
-
-  Widget _scrollButtonBuild() => Positioned(bottom: 20, right: 0, child: ScrollToTopButton(onPressed: _scrollToTop));
-
-  Widget _headerBuild() {
-    return AnimatedBuilder(
-      animation: _textPositionAnimation,
-      builder: (context, child) {
-        return Positioned(
-          top: MediaQuery.of(context).size.height * _textPositionAnimation.value + 20.0,
-          left: 0,
-          right: 0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                recommendedText,
-                style: headerTextStyle,
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buttonsBuild() {
-    return AnimatedBuilder(
-      animation: _textPositionAnimation,
-      builder: (context, child) {
-        return Positioned(
-          top: MediaQuery.of(context).size.height * _textPositionAnimation.value + 60.0,
-          left: 0,
-          right: 0,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  ButtonComponent(
-                    label: paidText,
-                    onPressed: () {},
-                    isFirstButton: true,
-                  ),
-                  const SizedBox(width: gap8),
-                  ButtonComponent(
-                    label: freeText,
-                    onPressed: () {},
-                    isFirstButton: false,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 
