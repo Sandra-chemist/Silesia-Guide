@@ -70,9 +70,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double height =
-        screenWidth < 600 ? MediaQuery.of(context).size.height * 0.11 : MediaQuery.of(context).size.width * 0.24;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: gap16),
@@ -81,32 +78,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             _semiCircularButtonBuild(),
             _headerBuild(),
             _buttonsBuild(),
-            _greenContainerBuild(height),
             _galleryBuild(),
             if (scrollOffset > 100) _scrollButtonBuild()
           ],
         ),
       ),
-    );
-  }
-
-  Widget _greenContainerBuild(double height) {
-    return AnimatedBuilder(
-      animation: _textPositionAnimation,
-      builder: (context, child) {
-        return Positioned(
-          top: MediaQuery.of(context).size.height * _textPositionAnimation.value + 120,
-          left: 0,
-          right: 0,
-          child: GreenTile(
-            onTap: () {},
-            text: travelText,
-            backgroundColor: AppColors.greenColor,
-            imagePath: 'assets/flags.png',
-            height: height,
-          ),
-        );
-      },
     );
   }
 
@@ -180,10 +156,35 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
+  Widget _greenContainerBuild(double height) {
+    return AnimatedBuilder(
+      animation: _textPositionAnimation,
+      builder: (context, child) {
+        return Stack(
+          children: [
+            Positioned(
+              left: 0,
+              right: 0,
+              child: GreenTile(
+                onTap: () {},
+                text: travelText,
+                backgroundColor: AppColors.greenColor,
+                imagePath: flagsImage,
+                height: height,
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget _galleryBuild() {
     double screenWidth = MediaQuery.of(context).size.width;
     double height =
         screenWidth < 600 ? MediaQuery.of(context).size.height * 0.24 : MediaQuery.of(context).size.width * 0.5;
+    double greenContainerHeight =
+        screenWidth < 600 ? MediaQuery.of(context).size.height * 0.12 : MediaQuery.of(context).size.width * 0.25;
 
     return AnimatedBuilder(
       animation: _imagePositionAnimation,
@@ -204,13 +205,16 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             ),
             itemBuilder: (context, index) {
               if (index == 0) {
+                return _greenContainerBuild(greenContainerHeight);
+              }
+              if (index == 2) {
                 return Transform.translate(
-                  offset: Offset(0, height / 2),
+                  offset: Offset(0, -(height / 2)),
                   child: BlueTile(
                     onTap: () {},
                     text: trailsText,
                     backgroundColor: AppColors.blueColor,
-                    imagePath: 'assets/traces.png',
+                    imagePath: tracesImage,
                   ),
                 );
               }
@@ -230,11 +234,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
               if (isInSecondColumn) {
                 return Transform.translate(
-                  offset: Offset(0, height / 2),
+                  offset: Offset(0, -(height / 2)),
                   child: item,
                 );
               }
-
               return item;
             },
             itemCount: imagePaths.length,

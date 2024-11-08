@@ -1,4 +1,4 @@
-final List<String> imagePaths = [
+List<String> imagePaths = const [
   'assets/planetarium_medium.jpeg',
   'assets/opera_medium.jpeg',
   'assets/stadium_medium.jpeg',
@@ -8,3 +8,6 @@ final List<String> imagePaths = [
   'assets/elephant_medium.jpeg',
   'assets/carboneum_edium.jpeg',
 ];
+
+const String flagsImage = 'assets/flags.png';
+const String tracesImage = 'assets/traces.png';

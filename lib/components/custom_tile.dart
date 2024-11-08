@@ -161,11 +161,6 @@ class GreenTile extends StatelessWidget {
                 imageHeight: imageHeight,
               ),
             ),
-            Expanded(
-              child: Container(
-                color: Colors.transparent,
-              ),
-            ),
           ],
         ),
       ],

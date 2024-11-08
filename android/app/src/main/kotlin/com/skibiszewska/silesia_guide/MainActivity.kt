@@ -78,7 +78,7 @@ class MainActivity : FlutterActivity() {
                 }
             })
 
-            imageView.animate().y(80f).setDuration(500).start()
+            imageView.animate().y(44f).setDuration(500).start()
         }
     }
 }

@@ -10,7 +10,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
-      // toolbarHeight: MediaQuery.of(context).size.width < 600 ? 80 : 40,
+      toolbarHeight: MediaQuery.of(context).size.width < 600 ? 80 : 100,
       leading: _buildIconButton(Icons.menu, () {}),
       actions: [
         _buildIconButton(Icons.favorite_border, () {}),
@@ -28,5 +28,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(80);
 }
