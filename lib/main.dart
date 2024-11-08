@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        toolbarHeight: MediaQuery.of(context).size.width < 600 ? 90 : 40,
+        toolbarHeight: MediaQuery.of(context).size.width < 600 ? 80 : 40,
       ),
       bottomNavigationBar: BottomNavbar(
         currentIndex: _currentIndex,

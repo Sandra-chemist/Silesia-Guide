@@ -4,6 +4,7 @@ import 'package:silesia_guide/components/image_card.dart';
 import 'package:silesia_guide/components/button_component.dart';
 import 'package:silesia_guide/components/scroll_to_top_button.dart';
 import 'package:silesia_guide/components/semi_circular_button.dart';
+import 'package:silesia_guide/utils/colors.dart';
 import 'package:silesia_guide/utils/image_path.dart';
 import 'package:silesia_guide/utils/spacing.dart';
 import 'package:silesia_guide/utils/text_styles.dart';
@@ -69,6 +70,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double height =
+        screenWidth < 600 ? MediaQuery.of(context).size.height * 0.11 : MediaQuery.of(context).size.width * 0.24;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: gap16),
@@ -77,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             _semiCircularButtonBuild(),
             _headerBuild(),
             _buttonsBuild(),
+            _greenContainerBuild(height),
             _galleryBuild(),
             if (scrollOffset > 100) _scrollButtonBuild()
           ],
@@ -85,7 +90,39 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
-  Widget _semiCircularButtonBuild() => Positioned(right: 0, top: -58, child: SemiCircularButton(onPressed: () {}));
+  Widget _greenContainerBuild(double height) {
+    return AnimatedBuilder(
+      animation: _textPositionAnimation,
+      builder: (context, child) {
+        return Positioned(
+          top: MediaQuery.of(context).size.height * _textPositionAnimation.value + 120,
+          left: 0,
+          right: 0,
+          child: GreenTile(
+            onTap: () {},
+            text: travelText,
+            backgroundColor: AppColors.greenColor,
+            imagePath: 'assets/flags.png',
+            height: height,
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _semiCircularButtonBuild() {
+    return AnimatedBuilder(
+      animation: _textPositionAnimation,
+      builder: (context, child) {
+        return Positioned(
+          right: 0,
+          top: MediaQuery.of(context).size.height * _textPositionAnimation.value - 60,
+          child: SemiCircularButton(onPressed: () {}),
+        );
+      },
+    );
+  }
+
   Widget _scrollButtonBuild() => Positioned(bottom: 20, right: 0, child: ScrollToTopButton(onPressed: _scrollToTop));
 
   Widget _headerBuild() {
@@ -169,10 +206,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               if (index == 0) {
                 return Transform.translate(
                   offset: Offset(0, height / 2),
-                  child: CustomTile(onTap: () {}, text: trailsText),
+                  child: BlueTile(
+                    onTap: () {},
+                    text: trailsText,
+                    backgroundColor: AppColors.blueColor,
+                    imagePath: 'assets/traces.png',
+                  ),
                 );
               }
-
               int adjustedIndex = index - 1;
               bool isInSecondColumn = adjustedIndex % 2 != 0;
 
