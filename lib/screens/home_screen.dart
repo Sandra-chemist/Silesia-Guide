@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:silesia_guide/components/buttons/button_section.dart';
-import 'package:silesia_guide/components/custom_tile.dart';
+import 'package:silesia_guide/components/gallery/gallery.dart';
 import 'package:silesia_guide/components/header.dart';
-import 'package:silesia_guide/components/image_card.dart';
 import 'package:silesia_guide/components/buttons/scroll_to_top_button.dart';
 import 'package:silesia_guide/components/buttons/semi_circular_button.dart';
-import 'package:silesia_guide/utils/colors.dart';
-import 'package:silesia_guide/utils/image_path.dart';
 import 'package:silesia_guide/utils/spacing.dart';
-import 'package:silesia_guide/utils/texts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -68,6 +64,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
+  void _toggleFavorite(int index) {
+    setState(() {
+      isFavoriteList[index] = !isFavoriteList[index];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,102 +80,16 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             SemiCircularButton(onPressed: () {}, animation: _textPositionAnimation),
             Header(animation: _textPositionAnimation),
             ButtonsSection(animation: _textPositionAnimation),
-            _galleryBuild(),
+            GallerySection(
+              scrollController: _scrollController,
+              isFavoriteList: isFavoriteList,
+              toggleFavorite: _toggleFavorite,
+              imagePositionAnimation: _imagePositionAnimation,
+            ),
             if (scrollOffset > 100) ScrollToTopButton(onPressed: _scrollToTop)
           ],
         ),
       ),
-    );
-  }
-
-  Widget _greenContainerBuild(double height) {
-    return AnimatedBuilder(
-      animation: _textPositionAnimation,
-      builder: (context, child) {
-        return Stack(
-          children: [
-            Positioned(
-              left: 0,
-              right: 0,
-              child: GreenTile(
-                onTap: () {},
-                text: travelText,
-                backgroundColor: AppColors.greenColor,
-                imagePath: flagsImage,
-                height: height,
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Widget _galleryBuild() {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double height =
-        screenWidth < 600 ? MediaQuery.of(context).size.height * 0.24 : MediaQuery.of(context).size.width * 0.5;
-    double greenContainerHeight =
-        screenWidth < 600 ? MediaQuery.of(context).size.height * 0.12 : MediaQuery.of(context).size.width * 0.25;
-
-    return AnimatedBuilder(
-      animation: _imagePositionAnimation,
-      builder: (context, child) {
-        return Positioned(
-          top: MediaQuery.of(context).size.height * _imagePositionAnimation.value + 120,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          child: GridView.builder(
-            controller: _scrollController,
-            padding: EdgeInsets.zero,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: gap8,
-              crossAxisSpacing: gap8,
-              mainAxisExtent: height,
-            ),
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                return _greenContainerBuild(greenContainerHeight);
-              }
-              if (index == 2) {
-                return Transform.translate(
-                  offset: Offset(0, -(height / 2)),
-                  child: BlueTile(
-                    onTap: () {},
-                    text: trailsText,
-                    backgroundColor: AppColors.blueColor,
-                    imagePath: tracesImage,
-                  ),
-                );
-              }
-              int adjustedIndex = index - 1;
-              bool isInSecondColumn = adjustedIndex % 2 != 0;
-
-              Widget item = ImageCardComponent(
-                imagePath: imagePaths[adjustedIndex],
-                isFavorite: isFavoriteList[adjustedIndex],
-                onFavoriteTap: () {
-                  setState(() {
-                    isFavoriteList[adjustedIndex] = !isFavoriteList[adjustedIndex];
-                  });
-                },
-                caption: captions[adjustedIndex],
-              );
-
-              if (isInSecondColumn) {
-                return Transform.translate(
-                  offset: Offset(0, -(height / 2)),
-                  child: item,
-                );
-              }
-              return item;
-            },
-            itemCount: imagePaths.length,
-          ),
-        );
-      },
     );
   }
 }
